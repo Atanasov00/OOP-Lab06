@@ -1,7 +1,12 @@
 package it.unibo.oop.lab.collections2;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -30,6 +35,8 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * think of what type of keys and values would best suit the requirements
      */
 
+	Map<User, String> userMap = new LinkedHashMap();
+	
     /*
      * [CONSTRUCTORS]
      * 
@@ -40,7 +47,7 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * 2) Define a further constructor where age is defaulted to -1
      */
-
+	
     /**
      * Builds a new {@link SocialNetworkUserImpl}.
      * 
@@ -57,6 +64,10 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
     }
+    
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user);
+    }
 
     /*
      * [METHODS]
@@ -66,17 +77,38 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        if(!userMap.containsKey(user)) {
+        	userMap.put(user, circle);
+        	return true;
+        }
+        else {
+    	return false;
+        }
     }
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+    	Collection<U> peopleNotGroup = new LinkedList();
+    	Set<U> keySet = new HashSet(userMap.keySet());
+    	
+    	for(U user: keySet) {
+    		if(groupName.equals(userMap.get(user))){
+    			peopleNotGroup.add(user);
+    		}
+    	}
+    	
+        return peopleNotGroup;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+    	List<U> peopleList = new LinkedList();
+    	Set <U> keySet = new HashSet(userMap.keySet());
+    	
+    	for(U user: keySet) {
+    		peopleList.add(user);
+    	}
+        return peopleList;
     }
 
 }
