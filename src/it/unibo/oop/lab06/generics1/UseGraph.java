@@ -13,7 +13,7 @@ public final class UseGraph {
      *            ignored
      */
     public static void main(final String... args) {
-        final Graph<String> g = null; // new GraphImpl<>();
+        final Graph<String> g = new GraphImpl<>(); // new GraphImpl<>();
         g.addNode("a");
         g.addNode("b");
         g.addNode("c");
@@ -23,8 +23,8 @@ public final class UseGraph {
         g.addEdge("b", "c");
         g.addEdge("c", "d");
         g.addEdge("d", "e");
-        g.addEdge("c", "a");
         g.addEdge("e", "a");
+        g.addEdge("c", "a");
         /*
          * Should print ["a","b","c","d","e"], in any order
          */
